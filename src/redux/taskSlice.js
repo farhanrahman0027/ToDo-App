@@ -1,24 +1,22 @@
-// src/redux/taskSlice.js
 import { createSlice } from "@reduxjs/toolkit";
-
-const initialState = {
-  tasks: JSON.parse(localStorage.getItem("tasks")) || [],
-};
 
 const taskSlice = createSlice({
   name: "tasks",
-  initialState,
+  initialState: {
+    tasks: [],
+  },
   reducers: {
     addTask: (state, action) => {
       state.tasks.push(action.payload);
-      localStorage.setItem("tasks", JSON.stringify(state.tasks)); // Persist tasks
+    },
+    setTasks: (state, action) => {
+      state.tasks = action.payload;
     },
     deleteTask: (state, action) => {
-      state.tasks = state.tasks.filter(task => task.id !== action.payload);
-      localStorage.setItem("tasks", JSON.stringify(state.tasks));
+      state.tasks = state.tasks.filter((task) => task.id !== action.payload);
     },
   },
 });
 
-export const { addTask, deleteTask } = taskSlice.actions;
+export const { addTask, setTasks, deleteTask } = taskSlice.actions;
 export default taskSlice.reducer;
